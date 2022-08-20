@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'models/item.dart';
 
 void main() {
   runApp(const App());
@@ -15,16 +16,26 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: const HomePage(
-        title: '',
-      ),
+      home: HomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key, required String title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  var items = [Item()];
 
+  HomePage({Key? key}) : super(key: key) {
+    items = [];
+    items.add(Item(title: "Item 1", done: false));
+    items.add(Item(title: "Item 2", done: true));
+    items.add(Item(title: "Item 3", done: false));
+  }
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +44,19 @@ class HomePage extends StatelessWidget {
         // actions: <Widget>[
         //   Icon(Icons.plus_one),
         // ],
-        title: Text("ToDo - List"),
+        title: const Text("ToDo - List"),
       ),
-      body: Center(
-        child: Text("Olá Mundo!"),
+      body: ListView.builder(
+        itemCount: widget.items.length,
+        itemBuilder: (BuildContext ctxt, int index) {
+          final item = widget.items[index];
+          return CheckboxListTile(
+            title: Text(item.title!),
+            key: Key(item.title!),
+            value: item.done,
+            onChanged: (value) {},
+          );
+        },
       ),
     );
   }
