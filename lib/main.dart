@@ -14,7 +14,7 @@ class App extends StatelessWidget {
       title: 'ToDo App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primarySwatch: Colors.grey,
       ),
       home: HomePage(),
     );
@@ -38,27 +38,38 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var newTaskCtrl = TextEditingController();
 
+  void add() {
+    if (newTaskCtrl.text.isEmpty) return;
+
+    setState(() {
+      widget.items.add(
+        Item(
+          title: newTaskCtrl.text,
+          done: false,
+        ),
+      );
+      newTaskCtrl.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: TextFormField(
+          controller: newTaskCtrl,
           keyboardType: TextInputType.text,
           style: TextStyle(
-            //color: Colors.white,
-            fontSize: 18,
+            color: Colors.white,
+            fontSize: 20,
           ),
           decoration: InputDecoration(
             labelText: "Nova tarefa...",
             labelStyle: TextStyle(
-                //color: Colors.white,
-                ),
+              color: Colors.white,
+            ),
           ),
         ),
-        // leading: Text("Menu"),
-        // actions: <Widget>[
-        //   Icon(Icons.plus_one),
-        // ],
       ),
       body: ListView.builder(
         itemCount: widget.items.length,
@@ -75,6 +86,11 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: add,
+        child: Icon(Icons.add),
+        backgroundColor: Colors.amber,
       ),
     );
   }
