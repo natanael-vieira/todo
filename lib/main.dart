@@ -26,9 +26,9 @@ class HomePage extends StatefulWidget {
 
   HomePage({Key? key}) : super(key: key) {
     items = [];
-    items.add(Item(title: "Item 1", done: false));
-    items.add(Item(title: "Item 2", done: true));
-    items.add(Item(title: "Item 3", done: false));
+    items.add(Item(title: "Banana", done: false));
+    items.add(Item(title: "Maçã", done: true));
+    items.add(Item(title: "Laranja", done: false));
   }
 
   @override
@@ -54,7 +54,11 @@ class _HomePageState extends State<HomePage> {
             title: Text(item.title!),
             key: Key(item.title!),
             value: item.done,
-            onChanged: (value) {},
+            onChanged: (value) {
+              setState(() {
+                item.done = value;
+              });
+            },
           );
         },
       ),
