@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import 'models/item.dart';
 
 void main() {
@@ -51,12 +51,14 @@ class _HomePageState extends State<HomePage> {
         ),
       );
       newTaskCtrl.clear();
+      save();
     });
   }
 
   void remove(int index) {
     setState(() {
       widget.items.removeAt(index);
+      save();
     });
   }
 
@@ -71,6 +73,11 @@ class _HomePageState extends State<HomePage> {
         widget.items = result;
       });
     }
+  }
+
+  save() async {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setString('data', jsonEncode(widget.items));
   }
 
   _HomePageState() {
@@ -107,6 +114,7 @@ class _HomePageState extends State<HomePage> {
               onChanged: (value) {
                 setState(() {
                   item.done = value;
+                  save();
                 });
               },
             ),
