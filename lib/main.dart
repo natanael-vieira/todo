@@ -29,11 +29,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Text("Menu"),
+        // leading: Text("Menu"),
+        // actions: <Widget>[
+        //   Icon(Icons.plus_one),
+        // ],
         title: Text("ToDo - List"),
-        actions: <Widget>[
-          Icon(Icons.plus_one),
-        ],
       ),
       body: Center(
         child: Text("Olá Mundo!"),
